@@ -49,11 +49,6 @@ class UpdateAction extends BaseAction
 
             $order->products()->whereNotIn('product_id', $productIDs)->delete();
 
-            $order->payment()->update([
-                'method' => $request->payment_method,
-                'amount' => $products['total'],
-            ]);
-
         });
 
         $data['orders'] = IndexAction::make()->orders();

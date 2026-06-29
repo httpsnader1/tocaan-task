@@ -17,18 +17,19 @@ class PaymentService
     {
     }
 
-    public function process(Order $order)
+    public function process(Order $order, string $method)
     {
         throw_if(
             $order->status !== OrderStatusEnum::PENDING,
-            new WarningException('Sorry , Payments Can Only Be Processed For Confirmed Orders')
+            new WarningException('Sorry , Payments Can Only Be Processed For Pending Orders')
         );
 
-        return DB::transaction(function () use ($order) {
+        return DB::transaction(function () use ($order, $method) {
 
-            $paymentMethod = $this->resolvePaymentMethod($order->payment->method);
+            $paymentMethod = $this->resolvePaymentMethod($method);
             $paymentResult = $paymentMethod->process($order);
             $order->payment->update([
+                'method' => $method,
                 'status' => $paymentResult['status'] ? PaymentStatusEnum::SUCCESS : PaymentStatusEnum::FAILED,
                 'paid_at' => $paymentResult['status'] ? now() : NULL,
                 'transaction_id' => $paymentResult['transaction_id'],

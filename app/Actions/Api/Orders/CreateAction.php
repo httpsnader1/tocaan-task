@@ -32,12 +32,6 @@ class CreateAction extends BaseAction
                 $order->products()->create($product);
             }
 
-            $order->payment()->create([
-                'method' => $request->payment_method,
-                'amount' => $products['total'],
-                'status' => PaymentStatusEnum::PENDING,
-            ]);
-
         });
 
         $data['orders'] = IndexAction::make()->orders();
