@@ -6,6 +6,7 @@ use App\Enums\PaymentMethodEnum;
 use App\Enums\PaymentStatusEnum;
 use App\Traits\BaseModelTrait;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 ])]
 class Payment extends Model
 {
-    use BaseModelTrait;
+    use HasFactory, BaseModelTrait;
 
     protected function casts(): array
     {

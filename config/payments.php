@@ -1,9 +1,13 @@
 <?php
 
+use App\Enums\PaymentMethodEnum;
+use App\Services\Payments\ApplePayService;
+use App\Services\Payments\CreditCardService;
+
 return [
     'gateways' => [
-        'credit_card' => \App\Services\Payments\CreditCardService::class,
-        'apple_pay' => \App\Services\Payments\ApplePayService::class,
+        PaymentMethodEnum::CREDIT_CARD->value => CreditCardService::class,
+        PaymentMethodEnum::APPLE_PAY->value => ApplePayService::class,
     ],
 
     'credit_card' => [

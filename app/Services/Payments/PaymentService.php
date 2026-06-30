@@ -33,15 +33,16 @@ class PaymentService
 
             $paymentMethod = $this->resolvePaymentMethod($method);
             $paymentResult = $paymentMethod->process($order);
-            $order->payment()->create([
+            $payment = $order->payment()->create([
                 'method' => $method,
                 'amount' => $order->total,
                 'status' => $paymentResult['status'] ? PaymentStatusEnum::SUCCESS : PaymentStatusEnum::FAILED,
                 'paid_at' => $paymentResult['status'] ? now() : NULL,
                 'transaction_id' => $paymentResult['transaction_id'],
             ]);
+            $order->setRelation('payment', $payment);
 
-            return $order->payment->fresh();
+            return $payment;
 
         });
     }

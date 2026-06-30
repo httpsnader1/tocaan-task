@@ -6,6 +6,7 @@ use App\Enums\OrderStatusEnum;
 use App\Models\Builders\OrderBuilder;
 use App\Traits\BaseModelTrait;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 ])]
 class Order extends Model
 {
-    use BaseModelTrait;
+    use HasFactory, BaseModelTrait;
 
     protected function casts(): array
     {

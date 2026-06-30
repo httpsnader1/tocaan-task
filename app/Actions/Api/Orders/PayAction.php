@@ -3,12 +3,14 @@
 namespace App\Actions\Api\Orders;
 
 use App\Classes\BaseAction;
+use App\Enums\PaymentMethodEnum;
 use App\Enums\PaymentStatusEnum;
 use App\Exceptions\WarningException;
 use App\Models\Order;
 use App\Services\OrderService;
 use App\Services\Payments\PaymentService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 
 class PayAction extends BaseAction
@@ -36,7 +38,7 @@ class PayAction extends BaseAction
     public function rules(): array
     {
         return [
-            'payment_method' => ['required'],
+            'payment_method' => ['required', new Enum(PaymentMethodEnum::class)],
         ];
     }
 }

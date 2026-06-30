@@ -1,58 +1,302 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Order & Payment Management API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel REST API for managing orders and payments, built with clean code and
+**extensibility** in mind: new payment gateways can be added with minimal changes
+using a strategy pattern driven by configuration.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Orders** – create (with automatic total calculation), update, delete, list (with
+  status filtering and pagination), and view a single order.
+- **Payments** – process a payment for a confirmed order through a pluggable gateway,
+  with stock decremented on success.
+- **Pluggable gateways** – add a new gateway by writing one class and adding one line
+  of config. No changes to controllers/services required.
+- **JWT authentication** – register, login, profile, logout.
+- **Validation** – every input is validated with meaningful error messages.
+- **Tested** – feature and unit tests, including the payment gateway logic.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.2+ / Laravel 12
+- [`tymon/jwt-auth`](https://github.com/tymondesigns/jwt-auth) for JWT authentication
+- [`lorisleiva/laravel-actions`](https://laravelactions.com/) for single-action endpoints
+- MySQL (app) / SQLite in-memory (tests)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Setup
 
 ```bash
-composer require laravel/boost --dev
+# 1. Install dependencies
+composer install
 
-php artisan boost:install
+# 2. Environment
+cp .env.example .env
+php artisan key:generate
+
+# 3. Configure the database in .env, then:
+#    DB_DATABASE=tocaan_task   DB_USERNAME=root   DB_PASSWORD=
+
+# 4. Generate the JWT signing secret (writes JWT_SECRET to .env)
+php artisan jwt:secret
+
+# 5. Run migrations and seed demo data (10 users + products)
+php artisan migrate --seed
+
+# 6. Serve
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+The API is now available at `http://127.0.0.1:8000/api`.
 
-## Contributing
+### Seeded login
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Email | Password |
+| --- | --- |
+| `tocaan.task1@gmail.com` | `12345678` |
 
-## Code of Conduct
+(Users `tocaan.task1` … `tocaan.task10` are seeded.)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## Authentication
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+All `products`, `orders`, and `payments` endpoints require a JWT.
 
-## License
+1. `POST /api/auth/register` or `POST /api/auth/login` → returns a `token`.
+2. Send it on every protected request:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+Authorization: Bearer <token>
+```
+
+---
+
+## Endpoints
+
+### Auth
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | `/api/auth/register` | Register and receive a token |
+| POST | `/api/auth/login` | Login and receive a token |
+| GET | `/api/auth/profile` | Current user (auth) |
+| GET | `/api/auth/logout` | Invalidate the token (auth) |
+
+### Orders
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| GET | `/api/orders` | List orders (paginated, filterable) |
+| POST | `/api/orders` | Create an order |
+| GET | `/api/orders/{order}` | View one order |
+| PATCH | `/api/orders/{order}` | Update an order |
+| DELETE | `/api/orders/{order}` | Delete an order |
+| POST | `/api/orders/{order}/pay` | Process a payment for the order |
+
+### Products
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| GET | `/api/products` | List products |
+| POST | `/api/products` | Create a product |
+| GET | `/api/products/{product}` | View a product |
+| PATCH | `/api/products/{product}` | Update a product |
+| DELETE | `/api/products/{product}` | Delete a product |
+| POST | `/api/products/{product}/stock` | Adjust stock |
+
+### Filtering & pagination
+
+List endpoints are paginated (10 per page). Orders support query filters:
+
+```
+GET /api/orders?filterStatus=confirmed
+GET /api/orders?filterPaymentMethod=credit_card
+GET /api/orders?filterPaymentStatus=success
+GET /api/orders?page=2
+```
+
+### Example: create an order
+
+```http
+POST /api/orders
+Authorization: Bearer <token>
+
+{
+  "products": [
+    { "product_id": 1, "quantity": 2 },
+    { "product_id": 3, "quantity": 1 }
+  ]
+}
+```
+
+The `total` is calculated server-side from each product's current price — it is never
+trusted from the client.
+
+### Example: pay for an order
+
+```http
+POST /api/orders/{order}/pay
+Authorization: Bearer <token>
+
+{ "payment_method": "credit_card" }
+```
+
+---
+
+## Payment Gateway Extensibility
+
+Payment gateways use a **strategy pattern** resolved through configuration, so the
+system is open for extension but closed for modification.
+
+### How it works
+
+1. `config/payments.php` maps a method name → a gateway class:
+
+   ```php
+   'gateways' => [
+       'credit_card' => \App\Services\Payments\CreditCardService::class,
+       'apple_pay'   => \App\Services\Payments\ApplePayService::class,
+   ],
+   ```
+
+2. The incoming `payment_method` is validated against `App\Enums\PaymentMethodEnum`, so
+   only supported methods reach the service — an unknown value returns a `422` with a
+   clear validation message before any processing happens.
+
+3. `PaymentService::resolvePaymentMethod()` looks up the requested method and resolves
+   the class from the container.
+
+4. The resolved gateway's `process(Order $order)` runs the gateway logic and returns a
+   normalized response (`status`, `transaction_id`, `data`). `PaymentService` then
+   persists the `Payment` record and, on success, decrements stock.
+
+Adding a gateway requires **no changes** to controllers, the `PaymentService`, the
+routes, or the database — only a new gateway class, one config line, and one enum case.
+
+### Adding a new gateway (e.g. PayPal)
+
+1. Add the case to `App\Enums\PaymentMethodEnum` — required first, since `payment_method`
+   is validated against this enum and the config below references it:
+
+   ```php
+   enum PaymentMethodEnum: string
+   {
+       // ...
+       case PAYPAL = 'paypal';
+       
+       
+       public function text(): string
+       {
+           return match ($this) {
+               // ...
+               self::PAYPAL => 'Paypal',
+           };
+       }
+   }
+   ```
+
+2. Create the gateway service:
+
+   ```php
+   // app/Services/Payments/PayPalService.php
+   namespace App\Services\Payments;
+
+   use App\Models\Order;
+   use Lorisleiva\Actions\Concerns\AsObject;
+
+   class PayPalService
+   {
+       use AsObject;
+
+       public function process(Order $order): array
+       {
+           // Call the PayPal SDK / API here using credentials from config.
+           return PaymentService::make()->paymentResponse(
+               status: true,
+               transactionID: 'PAYPAL-' . uniqid('', true),
+               data: ['orderID' => $order->id],
+           );
+       }
+   }
+   ```
+
+3. Register it in `config/payments.php`:
+
+   ```php
+   use App\Enums\PaymentMethodEnum;
+
+   'gateways' => [
+       // ...
+       PaymentMethodEnum::PAYPAL->value => \App\Services\Payments\PayPalService::class,
+   ],
+
+   'paypal' => [
+       // SOON , ADD DATA FOR PAYPAL CREDENTIALS
+   ],
+   ```
+
+That's it — clients can now send `"payment_method": "paypal"`.
+
+### Gateway configuration (API keys / secrets)
+
+Credentials live in `config/payments.php` and are read from `.env`, so secrets stay out
+of source control:
+
+```php
+'credit_card' => [
+    'api_key' => env('CREDIT_CARD_API_KEY'),
+],
+```
+
+---
+
+## Business Rules
+
+- A payment can only be processed for an order in the **confirmed** status.
+- An order **cannot be deleted or updated** once it has a **successful** payment.
+- Order totals are always computed server-side from product prices.
+- A product cannot be ordered beyond its available stock; stock is decremented when a
+  payment succeeds.
+
+---
+
+## Testing
+
+The suite uses an in-memory SQLite database (configured in `phpunit.xml`).
+
+```bash
+php artisan test
+```
+
+Coverage includes:
+
+- **Auth** – registration, unique-email, login success/failure, protected routes.
+- **Orders** – creation & total calculation, validation, stock checks, status filtering,
+  pagination, update, delete, and the "cannot modify/delete an order with a successful
+  payment" rule.
+- **Payments** – payment on a confirmed order, stock decrement, the "confirmed-only"
+  rule, unsupported gateway rejection, double-payment prevention, and per-gateway logic.
+- **Unit** – gateway resolution (strategy pattern) and each gateway's `process()`.
+
+---
+
+## API Documentation
+
+A ready-to-import collection is included at the project root:
+
+- `Tocaan Task.postman.json` (Postman)
+- `Tocaan Task.apidog.json` (Apidog)
+
+Import it, set the `token` after logging in, and the requests are organized by
+Authentication, Orders, Products, and Payments.
+
+---
+
+## Notes & Assumptions
+
+- The "cannot delete an order with payments" rule is interpreted as **successful**
+  payments — an order with only a failed/pending payment can still be deleted/updated.
+- Order status transitions (e.g. moving an order to `confirmed`) are assumed to be
+  handled administratively/by seed; payment intentionally requires a confirmed order.
+- Gateway `process()` methods are simulated (they always return success) and are the
+  single place to plug in a real SDK call.
+- The default guard for the API is `api` (JWT); the web guard is unused.

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\BaseModelTrait;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 #[Fillable([
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 ])]
 class Product extends Model
 {
-    use BaseModelTrait;
+    use HasFactory, BaseModelTrait;
 
     protected function casts(): array
     {
