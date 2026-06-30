@@ -249,7 +249,7 @@ of source control:
 
 - Orders are private: a user can only access their own orders. The index filters by the
   authenticated user, and `show` / `update` / `delete` / `pay` each guard ownership via
-  the `GuardsOrderOwnership` trait (returns `403` otherwise).
+  `OrderService::checkOrderOwnership()` (returns `403` otherwise).
 - A payment can only be processed for an order in the **confirmed** status.
 - An order **cannot be deleted or updated** once it has a **successful** payment.
 - Order totals are always computed server-side from product prices.
