@@ -294,12 +294,6 @@
                                     "type": "string"
                                 },
                                 {
-                                    "key": "filterUser",
-                                    "value": "1",
-                                    "description": "",
-                                    "type": "string"
-                                },
-                                {
                                     "key": "filterPaymentMethod",
                                     "value": "CreditCard",
                                     "description": "",
@@ -335,12 +329,6 @@
                         "body": {
                             "mode": "formdata",
                             "formdata": [
-                                {
-                                    "key": "payment_method",
-                                    "value": "apple_pay",
-                                    "type": "text",
-                                    "disabled": false
-                                },
                                 {
                                     "key": "products[0][product_id]",
                                     "value": "1",
@@ -408,12 +396,6 @@
                             "mode": "formdata",
                             "formdata": [
                                 {
-                                    "key": "payment_method",
-                                    "value": "credit_card",
-                                    "type": "text",
-                                    "disabled": false
-                                },
-                                {
                                     "key": "products[0][product_id]",
                                     "value": "5",
                                     "type": "text",
@@ -448,16 +430,23 @@
                             }
                         ],
                         "url": {
-                            "raw": "orders/2",
+                            "raw": "orders/:orderID",
                             "path": [
                                 "orders",
-                                "2"
+                                ":orderID"
                             ],
                             "host": [
                                 "{{baseUrl}}"
                             ],
                             "query": [],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "orderID",
+                                    "value": "1",
+                                    "description": "",
+                                    "type": "string"
+                                }
+                            ]
                         }
                     },
                     "response": [],
@@ -490,16 +479,23 @@
                             }
                         ],
                         "url": {
-                            "raw": "orders/12",
+                            "raw": "orders/:orderID",
                             "path": [
                                 "orders",
-                                "12"
+                                ":orderID"
                             ],
                             "host": [
                                 "{{baseUrl}}"
                             ],
                             "query": [],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "orderID",
+                                    "value": "1",
+                                    "description": "",
+                                    "type": "string"
+                                }
+                            ]
                         }
                     },
                     "response": [],
@@ -532,16 +528,23 @@
                             }
                         ],
                         "url": {
-                            "raw": "orders/12",
+                            "raw": "orders/:orderID",
                             "path": [
                                 "orders",
-                                "12"
+                                ":orderID"
                             ],
                             "host": [
                                 "{{baseUrl}}"
                             ],
                             "query": [],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "orderID",
+                                    "value": "1",
+                                    "description": "",
+                                    "type": "string"
+                                }
+                            ]
                         }
                     },
                     "response": [],
@@ -581,17 +584,24 @@
                             }
                         ],
                         "url": {
-                            "raw": "orders/3/pay",
+                            "raw": "orders/:orderID/pay",
                             "path": [
                                 "orders",
-                                "3",
+                                ":orderID",
                                 "pay"
                             ],
                             "host": [
                                 "{{baseUrl}}"
                             ],
                             "query": [],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "orderID",
+                                    "value": "1",
+                                    "description": "",
+                                    "type": "string"
+                                }
+                            ]
                         }
                     },
                     "response": [],
@@ -610,7 +620,7 @@
                             "type": "inherit",
                             "inherit": []
                         },
-                        "method": "GET",
+                        "method": "POST",
                         "body": {
                             "mode": "formdata",
                             "formdata": []
@@ -624,17 +634,212 @@
                             }
                         ],
                         "url": {
-                            "raw": "orders/3/confirm",
+                            "raw": "orders/:orderID/confirm",
                             "path": [
                                 "orders",
-                                "3",
+                                ":orderID",
                                 "confirm"
                             ],
                             "host": [
                                 "{{baseUrl}}"
                             ],
                             "query": [],
+                            "variable": [
+                                {
+                                    "key": "orderID",
+                                    "value": "1",
+                                    "description": "",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    },
+                    "response": [],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": [
+                    {
+                        "key": "token",
+                        "value": "{{token}}",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Payments",
+            "description": "",
+            "item": [
+                {
+                    "name": "payments",
+                    "description": "",
+                    "event": [],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "payments",
+                            "path": [
+                                "payments"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "key": "filterStatus",
+                                    "value": "success",
+                                    "description": "",
+                                    "type": "string"
+                                },
+                                {
+                                    "key": "filterMethod",
+                                    "value": "CreditCard",
+                                    "description": "",
+                                    "type": "string"
+                                }
+                            ],
                             "variable": []
+                        }
+                    },
+                    "response": [],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "show",
+                    "description": "",
+                    "event": [],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "payments/:paymentID",
+                            "path": [
+                                "payments",
+                                ":paymentID"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "paymentID",
+                                    "value": "1",
+                                    "description": "",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    },
+                    "response": [],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "pay",
+                    "description": "",
+                    "event": [],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "POST",
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "payment_method",
+                                    "value": "credit_card",
+                                    "type": "text",
+                                    "disabled": false
+                                }
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "payments/:paymentID/pay",
+                            "path": [
+                                "payments",
+                                ":paymentID",
+                                "pay"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "paymentID",
+                                    "value": "2",
+                                    "description": "",
+                                    "type": "string"
+                                }
+                            ]
                         }
                     },
                     "response": [],

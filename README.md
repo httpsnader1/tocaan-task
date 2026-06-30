@@ -106,6 +106,26 @@ when the order belongs to someone else.
 > **testing convenience** so the payment flow can be exercised end-to-end via the API /
 > Postman collection.
 
+### Payments
+
+Payment endpoints are scoped to the authenticated user (a payment is reachable only if
+its order belongs to the user — otherwise `403`).
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| GET | `/api/payments` | List the user's payments (paginated, filterable) |
+| GET | `/api/payments/{payment}` | View one payment |
+| POST | `/api/payments/{payment}/pay` | Retry processing an existing, not-yet-successful payment |
+
+**There is one payment per order**, and two ways to drive it:
+
+- `POST /api/orders/{order}/pay` — **creates** the payment for the order on the first
+  attempt (or updates the existing non-successful one).
+- `POST /api/payments/{payment}/pay` — **re-processes an existing** payment that was
+  created but not yet successful (e.g. a previous `failed` attempt).
+
+A payment that is already `successful` cannot be paid again (returns `422`).
+
 ### Filtering & pagination
 
 List endpoints are paginated (10 per page). Orders support query filters:

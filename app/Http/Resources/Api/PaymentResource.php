@@ -13,6 +13,7 @@ class PaymentResource extends JsonResource
             'id' => $this->id,
             'transactionID' => $this->transaction_id,
             'method' => $this->method,
+            'amount' => $this->amount,
             'status' => [
                 'id' => $this->status,
                 'text' => $this->status->text(),
@@ -21,7 +22,7 @@ class PaymentResource extends JsonResource
             'paidAt' => $this->paid_at_text,
             'payable' => $this->whenLoaded('payable', fn($payable) => [
                 'id' => $payable->id,
-                'number' => $payable->number,
+                'total' => $payable->total,
             ]),
         ];
     }
