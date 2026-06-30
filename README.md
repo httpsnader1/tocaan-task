@@ -97,7 +97,7 @@ when the order belongs to someone else.
 | GET | `/api/orders/{order}` | View one of the user's orders |
 | PATCH | `/api/orders/{order}` | Update an order |
 | DELETE | `/api/orders/{order}` | Delete an order |
-| GET | `/api/orders/{order}/confirm` | Mark the order as `confirmed` (testing helper — see note) |
+| POST | `/api/orders/{order}/confirm` | Mark the order as `confirmed` (testing helper — see note) |
 | POST | `/api/orders/{order}/pay` | Process a payment for the order |
 
 > **Note on `confirm`:** payments can only be processed for orders in the `confirmed`

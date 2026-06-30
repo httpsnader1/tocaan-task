@@ -29,7 +29,20 @@ Route::middleware('auth:api')->group(function () {
             Route::patch('', App\Actions\Api\Orders\UpdateAction::class);
             Route::delete('', App\Actions\Api\Orders\DeleteAction::class);
             Route::post('pay', App\Actions\Api\Orders\PayAction::class);
-            Route::get('confirm', App\Actions\Api\Orders\ConfirmAction::class);
+            Route::post('confirm', App\Actions\Api\Orders\ConfirmAction::class);
+
+        });
+
+    });
+
+    Route::prefix('payments')->group(function () {
+
+        Route::get('', App\Actions\Api\Payments\IndexAction::class);
+
+        Route::prefix('{payment}')->group(function () {
+
+            Route::get('', App\Actions\Api\Payments\ShowAction::class);
+            Route::post('pay', App\Actions\Api\Payments\PayAction::class);
 
         });
 

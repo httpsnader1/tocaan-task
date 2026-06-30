@@ -136,4 +136,28 @@ class PaymentTest extends TestCase
         $this->assertNotNull($payment);
         $this->assertStringStartsWith('APPLE-PAY-', $payment->transaction_id);
     }
+
+    public function test_paying_after_a_failed_attempt_updates_the_same_payment(): void
+    {
+        $user = $this->authenticate();
+        $product = Product::factory()->create(['price' => 100, 'stock' => 10]);
+        $order = $this->confirmedOrderWith($user, $product);
+
+        // A previous, non-successful attempt already left a payment row.
+        Payment::factory()->failed()->create([
+            'payable_id' => $order->id,
+            'payable_type' => Order::class,
+        ]);
+
+        $this->postJson("/api/orders/{$order->id}/pay", [
+            'payment_method' => 'credit_card',
+        ])->assertOk();
+
+        // Still exactly one payment for the order, now marked successful.
+        $this->assertSame(1, Payment::query()->where('payable_id', $order->id)->count());
+        $this->assertDatabaseHas('payments', [
+            'payable_id' => $order->id,
+            'status' => PaymentStatusEnum::SUCCESS->value,
+        ]);
+    }
 }

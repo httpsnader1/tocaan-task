@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Actions\Api\Orders;
+namespace App\Actions\Api\Payments;
 
 use App\Classes\BaseAction;
 use App\Enums\PaymentMethodEnum;
 use App\Enums\PaymentStatusEnum;
 use App\Exceptions\WarningException;
-use App\Models\Order;
+use App\Models\Payment;
 use App\Services\OrderService;
 use App\Services\Payments\PaymentService;
 use DB;
@@ -16,28 +16,28 @@ use Lorisleiva\Actions\ActionRequest;
 
 class PayAction extends BaseAction
 {
-    public function handle(Order $order, ActionRequest $request): JsonResponse
+    public function handle(Payment $payment, ActionRequest $request): JsonResponse
     {
-        OrderService::make()->checkOrderOwnership($order);
+        PaymentService::make()->checkPaymentOwnership($payment);
 
-        DB::transaction(function () use ($request, $order): void {
+        DB::transaction(function () use ($request, $payment): void {
 
-            $paymentService = PaymentService::make()->process($order, $request->payment_method);
+            $paymentService = PaymentService::make()->process($payment->payable, $request->payment_method);
 
             throw_if(
                 $paymentService->status !== PaymentStatusEnum::SUCCESS,
                 new WarningException('Sorry , Payment Status Not Success')
             );
 
-            foreach ($order->products as $product) {
+            foreach ($payment->payable->products as $product) {
                 OrderService::make()->decrementProductStock($product->product_id, $product->quantity);
             }
 
         });
 
-        $data['orders'] = IndexAction::make()->orders();
+        $data['payments'] = IndexAction::make()->payments();
 
-        return $this->apiResponse('Order Pay Successfully', $data);
+        return $this->apiResponse('Payment Pay Successfully', $data);
     }
 
     public function rules(): array

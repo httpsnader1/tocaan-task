@@ -19,6 +19,10 @@ class PaymentResource extends JsonResource
                 'color' => $this->status->color(),
             ],
             'paidAt' => $this->paid_at_text,
+            'payable' => $this->whenLoaded('payable', fn($payable) => [
+                'id' => $payable->id,
+                'number' => $payable->number,
+            ]),
         ];
     }
 }

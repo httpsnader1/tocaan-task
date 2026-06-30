@@ -4,12 +4,16 @@ namespace App\Models;
 
 use App\Enums\PaymentMethodEnum;
 use App\Enums\PaymentStatusEnum;
+use App\Models\Builders\PaymentBuilder;
 use App\Traits\BaseModelTrait;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * @method static PaymentBuilder query()
+ */
 #[Fillable([
     'method',
     'amount',
@@ -29,6 +33,11 @@ class Payment extends Model
             'status' => PaymentStatusEnum::class,
             'paid_at' => 'datetime',
         ];
+    }
+
+    public function newEloquentBuilder($query): PaymentBuilder
+    {
+        return new PaymentBuilder($query);
     }
 
     public function payable(): MorphTo

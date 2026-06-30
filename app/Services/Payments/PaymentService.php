@@ -6,6 +6,7 @@ use App\Enums\OrderStatusEnum;
 use App\Enums\PaymentStatusEnum;
 use App\Exceptions\WarningException;
 use App\Models\Order;
+use App\Models\Payment;
 use DB;
 use Lorisleiva\Actions\Concerns\AsObject;
 
@@ -33,7 +34,7 @@ class PaymentService
 
             $paymentMethod = $this->resolvePaymentMethod($method);
             $paymentResult = $paymentMethod->process($order);
-            $payment = $order->payment()->create([
+            $payment = $order->payment()->updateOrCreate([], [
                 'method' => $method,
                 'amount' => $order->total,
                 'status' => $paymentResult['status'] ? PaymentStatusEnum::SUCCESS : PaymentStatusEnum::FAILED,
@@ -66,5 +67,13 @@ class PaymentService
             'transaction_id' => $transactionID,
             'data' => $data,
         ];
+    }
+
+    public function checkPaymentOwnership(Payment $payment): void
+    {
+        throw_if(
+            $payment->payable->user_id !== auth('api')->id(),
+            new WarningException('Sorry , You Are Not Allowed To Access This Payment', [], 403)
+        );
     }
 }

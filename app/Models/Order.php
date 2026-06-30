@@ -51,4 +51,9 @@ class Order extends Model
     {
         return $this->morphOne(Payment::class, 'payable');
     }
+
+    public function getNumberAttribute(): string
+    {
+        return 'ORDER-' . $this->id;
+    }
 }

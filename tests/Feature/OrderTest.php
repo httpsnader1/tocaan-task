@@ -220,7 +220,7 @@ class OrderTest extends TestCase
         $user = $this->authenticate();
         $order = Order::factory()->for($user)->create(['status' => OrderStatusEnum::PENDING]);
 
-        $this->getJson("/api/orders/{$order->id}/confirm")->assertOk();
+        $this->postJson("/api/orders/{$order->id}/confirm")->assertOk();
 
         $this->assertDatabaseHas('orders', [
             'id' => $order->id,
@@ -233,7 +233,7 @@ class OrderTest extends TestCase
         $user = $this->authenticate();
         $order = Order::factory()->for($user)->confirmed()->create();
 
-        $this->getJson("/api/orders/{$order->id}/confirm")->assertStatus(422);
+        $this->postJson("/api/orders/{$order->id}/confirm")->assertStatus(422);
     }
 
     public function test_user_cannot_confirm_another_users_order(): void
@@ -242,7 +242,7 @@ class OrderTest extends TestCase
         $other = User::factory()->create();
         $order = Order::factory()->for($other)->create();
 
-        $this->getJson("/api/orders/{$order->id}/confirm")->assertForbidden();
+        $this->postJson("/api/orders/{$order->id}/confirm")->assertForbidden();
 
         $this->assertDatabaseHas('orders', [
             'id' => $order->id,
