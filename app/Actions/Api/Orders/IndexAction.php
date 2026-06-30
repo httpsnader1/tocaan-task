@@ -22,6 +22,7 @@ class IndexAction extends BaseAction
         return OrderResource::collection(
             Order::query()
                 ->filters()
+                ->whereUserId(auth('api')->id())
                 ->with('user', 'products.product', 'payment')
                 ->withCount('products')
                 ->latest()

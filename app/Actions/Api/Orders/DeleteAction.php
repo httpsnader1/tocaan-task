@@ -6,12 +6,15 @@ use App\Classes\BaseAction;
 use App\Enums\PaymentStatusEnum;
 use App\Exceptions\WarningException;
 use App\Models\Order;
+use App\Services\OrderService;
 use Illuminate\Http\JsonResponse;
 
 class DeleteAction extends BaseAction
 {
     public function handle(Order $order): JsonResponse
     {
+        OrderService::make()->checkOrderOwnership($order);
+
         throw_if(
             $order->payment?->status === PaymentStatusEnum::SUCCESS,
             new WarningException('Sorry , You Can Not Delete Order With Success Payment')

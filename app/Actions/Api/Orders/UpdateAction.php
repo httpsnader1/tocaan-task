@@ -15,6 +15,8 @@ class UpdateAction extends BaseAction
 {
     public function handle(Order $order, OrderRequest $request): JsonResponse
     {
+        OrderService::make()->checkOrderOwnership($order);
+
         throw_if(
             $order->payment?->status === PaymentStatusEnum::SUCCESS,
             new WarningException('Sorry , You Can Not Update Order With Success Payment')

@@ -100,6 +100,63 @@ class OrderTest extends TestCase
             ]);
     }
 
+    public function test_listing_only_returns_the_authenticated_users_orders(): void
+    {
+        $user = $this->authenticate();
+        $other = User::factory()->create();
+        Order::factory()->for($user)->create();
+        Order::factory()->count(2)->for($other)->create();
+
+        $this->getJson('/api/orders')
+            ->assertOk()
+            ->assertJsonPath('data.orders.pagination.total', 1);
+    }
+
+    public function test_user_cannot_view_another_users_order(): void
+    {
+        $this->authenticate();
+        $other = User::factory()->create();
+        $order = Order::factory()->for($other)->create();
+
+        $this->getJson("/api/orders/{$order->id}")->assertForbidden();
+    }
+
+    public function test_user_cannot_delete_another_users_order(): void
+    {
+        $this->authenticate();
+        $other = User::factory()->create();
+        $order = Order::factory()->for($other)->create();
+
+        $this->deleteJson("/api/orders/{$order->id}")->assertForbidden();
+
+        $this->assertModelExists($order);
+    }
+
+    public function test_user_cannot_update_another_users_order(): void
+    {
+        $this->authenticate();
+        $other = User::factory()->create();
+        $order = Order::factory()->for($other)->create();
+        $product = Product::factory()->create(['stock' => 10]);
+
+        $this->patchJson("/api/orders/{$order->id}", [
+            'products' => [
+                ['product_id' => $product->id, 'quantity' => 1],
+            ],
+        ])->assertForbidden();
+    }
+
+    public function test_user_cannot_pay_another_users_order(): void
+    {
+        $this->authenticate();
+        $other = User::factory()->create();
+        $order = Order::factory()->for($other)->confirmed()->create();
+
+        $this->postJson("/api/orders/{$order->id}/pay", [
+            'payment_method' => 'credit_card',
+        ])->assertForbidden();
+    }
+
     public function test_user_can_update_an_order(): void
     {
         $user = $this->authenticate();

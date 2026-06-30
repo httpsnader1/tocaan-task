@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\WarningException;
+use App\Models\Order;
 use App\Models\Product;
 use Lorisleiva\Actions\Concerns\AsObject;
 
@@ -61,5 +62,13 @@ class OrderService
         Product::query()
             ->find($productID)
             ->increment('stock', $quantity);
+    }
+
+    public function checkOrderOwnership(Order $order): void
+    {
+        throw_if(
+            $order->user_id !== auth('api')->id(),
+            new WarningException('Sorry , You Are Not Allowed To Access This Order', [], 403)
+        );
     }
 }

@@ -84,24 +84,20 @@ Authorization: Bearer <token>
 | GET | `/api/auth/logout` | Invalidate the token (auth) |
 
 ### Orders
+
+Every order endpoint is **scoped to the authenticated user** — a user can only list,
+view, update, delete, or pay for their own orders. The listing is filtered by the
+current user, and each single-order action guards ownership explicitly, returning `403`
+when the order belongs to someone else.
+
 | Method | Endpoint | Description |
 | --- | --- | --- |
-| GET | `/api/orders` | List orders (paginated, filterable) |
+| GET | `/api/orders` | List the current user's orders (paginated, filterable) |
 | POST | `/api/orders` | Create an order |
-| GET | `/api/orders/{order}` | View one order |
+| GET | `/api/orders/{order}` | View one of the user's orders |
 | PATCH | `/api/orders/{order}` | Update an order |
 | DELETE | `/api/orders/{order}` | Delete an order |
 | POST | `/api/orders/{order}/pay` | Process a payment for the order |
-
-### Products
-| Method | Endpoint | Description |
-| --- | --- | --- |
-| GET | `/api/products` | List products |
-| POST | `/api/products` | Create a product |
-| GET | `/api/products/{product}` | View a product |
-| PATCH | `/api/products/{product}` | Update a product |
-| DELETE | `/api/products/{product}` | Delete a product |
-| POST | `/api/products/{product}/stock` | Adjust stock |
 
 ### Filtering & pagination
 
@@ -251,6 +247,9 @@ of source control:
 
 ## Business Rules
 
+- Orders are private: a user can only access their own orders. The index filters by the
+  authenticated user, and `show` / `update` / `delete` / `pay` each guard ownership via
+  the `GuardsOrderOwnership` trait (returns `403` otherwise).
 - A payment can only be processed for an order in the **confirmed** status.
 - An order **cannot be deleted or updated** once it has a **successful** payment.
 - Order totals are always computed server-side from product prices.
@@ -271,8 +270,8 @@ Coverage includes:
 
 - **Auth** – registration, unique-email, login success/failure, protected routes.
 - **Orders** – creation & total calculation, validation, stock checks, status filtering,
-  pagination, update, delete, and the "cannot modify/delete an order with a successful
-  payment" rule.
+  pagination, update, delete, per-user scoping (a user cannot see/delete another user's
+  orders), and the "cannot modify/delete an order with a successful payment" rule.
 - **Payments** – payment on a confirmed order, stock decrement, the "confirmed-only"
   rule, unsupported gateway rejection, double-payment prevention, and per-gateway logic.
 - **Unit** – gateway resolution (strategy pattern) and each gateway's `process()`.

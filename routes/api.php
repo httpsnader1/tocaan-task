@@ -18,22 +18,6 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth:api')->group(function () {
 
-    Route::prefix('products')->group(function () {
-
-        Route::get('', App\Actions\Api\Products\IndexAction::class);
-        Route::post('', App\Actions\Api\Products\CreateAction::class);
-
-        Route::prefix('{product}')->group(function () {
-
-            Route::get('', App\Actions\Api\Products\ShowAction::class);
-            Route::patch('', App\Actions\Api\Products\UpdateAction::class);
-            Route::delete('', App\Actions\Api\Products\DeleteAction::class);
-            Route::post('stock', App\Actions\Api\Products\StockAction::class);
-
-        });
-
-    });
-
     Route::prefix('orders')->group(function () {
 
         Route::get('', App\Actions\Api\Orders\IndexAction::class);
