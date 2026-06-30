@@ -475,7 +475,7 @@
               "name": "logout",
               "api": {
                 "id": "38808815",
-                "method": "get",
+                "method": "post",
                 "path": "auth/logout",
                 "parameters": {
                   "header": [

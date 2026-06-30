@@ -204,7 +204,7 @@
                                 }
                             ]
                         },
-                        "method": "GET",
+                        "method": "POST",
                         "body": {},
                         "header": [
                             {

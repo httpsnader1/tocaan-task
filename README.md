@@ -81,7 +81,7 @@ Authorization: Bearer <token>
 | POST | `/api/auth/register` | Register and receive a token |
 | POST | `/api/auth/login` | Login and receive a token |
 | GET | `/api/auth/profile` | Current user (auth) |
-| GET | `/api/auth/logout` | Invalidate the token (auth) |
+| POST | `/api/auth/logout` | Invalidate the token (auth) |
 
 ### Orders
 
@@ -261,14 +261,27 @@ That's it — clients can now send `"payment_method": "paypal"`.
 
 ### Gateway configuration (API keys / secrets)
 
-Credentials live in `config/payments.php` and are read from `.env`, so secrets stay out
-of source control:
+Each gateway has its own credentials block in `config/payments.php`, and every value is
+pulled from the environment so secrets never live in source control:
 
 ```php
 'credit_card' => [
     'api_key' => env('CREDIT_CARD_API_KEY'),
+    'secret'  => env('CREDIT_CARD_SECRET'),
+],
+
+'apple_pay' => [
+    'merchant_id' => env('APPLE_PAY_MERCHANT_ID'),
+    'secret'      => env('APPLE_PAY_SECRET'),
 ],
 ```
+
+The matching keys are listed (empty) in `.env.example` so it's clear **where** each
+provider's credentials go. The values shipped here are intentionally **placeholders** —
+the gateways are simulated, and the real provider is not yet decided. When an actual
+gateway is contracted, you only fill its keys in `.env`; no code changes are needed, and
+a gateway reads its own block via `config('payments.<method>')` (e.g.
+`config('payments.credit_card')`).
 
 ---
 

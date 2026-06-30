@@ -10,7 +10,7 @@ Route::prefix('auth')->group(function () {
     Route::middleware('auth:api')->group(function () {
 
         Route::get('profile', App\Actions\Api\Auth\ProfileAction::class);
-        Route::get('logout', App\Actions\Api\Auth\LogoutAction::class);
+        Route::post('logout', App\Actions\Api\Auth\LogoutAction::class);
 
     });
 
