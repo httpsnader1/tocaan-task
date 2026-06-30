@@ -214,4 +214,39 @@ class OrderTest extends TestCase
             ],
         ])->assertStatus(422);
     }
+
+    public function test_user_can_confirm_their_order(): void
+    {
+        $user = $this->authenticate();
+        $order = Order::factory()->for($user)->create(['status' => OrderStatusEnum::PENDING]);
+
+        $this->getJson("/api/orders/{$order->id}/confirm")->assertOk();
+
+        $this->assertDatabaseHas('orders', [
+            'id' => $order->id,
+            'status' => OrderStatusEnum::CONFIRMED->value,
+        ]);
+    }
+
+    public function test_confirming_an_already_confirmed_order_fails(): void
+    {
+        $user = $this->authenticate();
+        $order = Order::factory()->for($user)->confirmed()->create();
+
+        $this->getJson("/api/orders/{$order->id}/confirm")->assertStatus(422);
+    }
+
+    public function test_user_cannot_confirm_another_users_order(): void
+    {
+        $this->authenticate();
+        $other = User::factory()->create();
+        $order = Order::factory()->for($other)->create();
+
+        $this->getJson("/api/orders/{$order->id}/confirm")->assertForbidden();
+
+        $this->assertDatabaseHas('orders', [
+            'id' => $order->id,
+            'status' => OrderStatusEnum::PENDING->value,
+        ]);
+    }
 }

@@ -29,6 +29,7 @@ Route::middleware('auth:api')->group(function () {
             Route::patch('', App\Actions\Api\Orders\UpdateAction::class);
             Route::delete('', App\Actions\Api\Orders\DeleteAction::class);
             Route::post('pay', App\Actions\Api\Orders\PayAction::class);
+            Route::get('confirm', App\Actions\Api\Orders\ConfirmAction::class);
 
         });
 

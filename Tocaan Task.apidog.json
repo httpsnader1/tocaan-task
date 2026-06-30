@@ -558,631 +558,6 @@
           ]
         },
         {
-          "name": "Products",
-          "id": 9288996,
-          "auth": {
-            "type": "bearer",
-            "bearer": {
-              "token": "{{token}}"
-            }
-          },
-          "securityScheme": {},
-          "parentId": 0,
-          "serverId": "",
-          "description": "",
-          "identityPattern": {
-            "httpApi": {
-              "type": "inherit",
-              "bodyType": ""
-            }
-          },
-          "shareSettings": {},
-          "visibility": "INHERITED",
-          "moduleId": 1335111,
-          "preProcessors": [
-            {
-              "id": "inheritProcessors",
-              "type": "inheritProcessors",
-              "data": {}
-            }
-          ],
-          "postProcessors": [
-            {
-              "id": "inheritProcessors",
-              "type": "inheritProcessors",
-              "data": {}
-            }
-          ],
-          "inheritPostProcessors": {},
-          "inheritPreProcessors": {},
-          "items": [
-            {
-              "name": "products",
-              "api": {
-                "id": "38813012",
-                "method": "get",
-                "path": "products",
-                "parameters": {
-                  "header": [
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "string",
-                      "id": "6BBfgWX94d",
-                      "example": "application/json",
-                      "enable": true,
-                      "name": "Accept"
-                    }
-                  ]
-                },
-                "auth": {
-                  "type": "inherit",
-                  "inherit": {}
-                },
-                "securityScheme": {},
-                "commonParameters": {
-                  "query": [],
-                  "body": [],
-                  "cookie": [],
-                  "header": []
-                },
-                "responses": [
-                  {
-                    "id": "104324428",
-                    "code": 200,
-                    "name": "Success",
-                    "headers": [],
-                    "jsonSchema": {
-                      "type": "object",
-                      "properties": {}
-                    },
-                    "itemSchema": {},
-                    "description": "",
-                    "contentType": "json",
-                    "mediaType": ""
-                  }
-                ],
-                "responseExamples": [],
-                "requestBody": {
-                  "type": "none",
-                  "parameters": [],
-                  "required": true,
-                  "mediaType": "",
-                  "examples": [],
-                  "oasExtensions": ""
-                },
-                "description": "",
-                "tags": [],
-                "status": "developing",
-                "serverId": "",
-                "operationId": "",
-                "sourceUrl": "",
-                "ordering": 25,
-                "cases": [],
-                "mocks": [],
-                "customApiFields": "{}",
-                "advancedSettings": {
-                  "disabledSystemHeaders": {}
-                },
-                "mockScript": {},
-                "codeSamples": [],
-                "commonResponseStatus": {},
-                "responseChildren": [],
-                "visibility": "INHERITED",
-                "moduleId": 1335111,
-                "oasExtensions": "",
-                "type": "http",
-                "preProcessors": [],
-                "postProcessors": [],
-                "inheritPostProcessors": {},
-                "inheritPreProcessors": {}
-              }
-            },
-            {
-              "name": "create",
-              "api": {
-                "id": "38814257",
-                "method": "post",
-                "path": "products",
-                "parameters": {
-                  "query": [],
-                  "header": [
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "string",
-                      "id": "6BBfgWX94d",
-                      "example": "application/json",
-                      "enable": true,
-                      "name": "Accept"
-                    }
-                  ]
-                },
-                "auth": {
-                  "type": "inherit",
-                  "inherit": {}
-                },
-                "securityScheme": {},
-                "commonParameters": {
-                  "query": [],
-                  "body": [],
-                  "cookie": [],
-                  "header": []
-                },
-                "responses": [
-                  {
-                    "id": "104324428",
-                    "code": 200,
-                    "name": "Success",
-                    "headers": [],
-                    "jsonSchema": {
-                      "type": "object",
-                      "properties": {}
-                    },
-                    "itemSchema": {},
-                    "description": "",
-                    "contentType": "json",
-                    "mediaType": ""
-                  }
-                ],
-                "responseExamples": [],
-                "requestBody": {
-                  "type": "multipart/form-data",
-                  "parameters": [
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "string",
-                      "id": "mXovdMQQw7",
-                      "example": "{{$commerce.productName}}",
-                      "enable": true,
-                      "name": "name",
-                      "contentType": ""
-                    },
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "number",
-                      "id": "8yrNviIGft",
-                      "example": "{{$commerce.price(dec=2)}}",
-                      "enable": true,
-                      "name": "price",
-                      "contentType": "",
-                      "schema": {
-                        "type": "number"
-                      }
-                    },
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "number",
-                      "id": "zuH985kRN6",
-                      "example": "true",
-                      "enable": true,
-                      "name": "is_active",
-                      "contentType": "",
-                      "schema": {
-                        "type": "number"
-                      }
-                    }
-                  ],
-                  "required": true,
-                  "mediaType": "",
-                  "examples": [],
-                  "oasExtensions": ""
-                },
-                "description": "",
-                "tags": [],
-                "status": "developing",
-                "serverId": "",
-                "operationId": "",
-                "sourceUrl": "",
-                "ordering": 31,
-                "cases": [],
-                "mocks": [],
-                "customApiFields": "{}",
-                "advancedSettings": {
-                  "disabledSystemHeaders": {}
-                },
-                "mockScript": {},
-                "codeSamples": [],
-                "commonResponseStatus": {},
-                "responseChildren": [],
-                "visibility": "INHERITED",
-                "moduleId": 1335111,
-                "oasExtensions": "",
-                "type": "http",
-                "preProcessors": [],
-                "postProcessors": [],
-                "inheritPostProcessors": {},
-                "inheritPreProcessors": {}
-              }
-            },
-            {
-              "name": "update",
-              "api": {
-                "id": "38817865",
-                "method": "patch",
-                "path": "products/6",
-                "parameters": {
-                  "query": [],
-                  "header": [
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "string",
-                      "id": "6BBfgWX94d",
-                      "example": "application/json",
-                      "enable": true,
-                      "name": "Accept"
-                    }
-                  ]
-                },
-                "auth": {
-                  "type": "inherit",
-                  "inherit": {}
-                },
-                "securityScheme": {},
-                "commonParameters": {
-                  "query": [],
-                  "body": [],
-                  "cookie": [],
-                  "header": []
-                },
-                "responses": [
-                  {
-                    "id": "104324428",
-                    "code": 200,
-                    "name": "Success",
-                    "headers": [],
-                    "jsonSchema": {
-                      "type": "object",
-                      "properties": {}
-                    },
-                    "itemSchema": {},
-                    "description": "",
-                    "contentType": "json",
-                    "mediaType": ""
-                  }
-                ],
-                "responseExamples": [],
-                "requestBody": {
-                  "type": "multipart/form-data",
-                  "parameters": [
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "string",
-                      "id": "mXovdMQQw7",
-                      "example": "{{$commerce.productName}}",
-                      "enable": true,
-                      "name": "name",
-                      "contentType": ""
-                    },
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "number",
-                      "id": "8yrNviIGft",
-                      "example": "{{$commerce.price(dec=2)}}",
-                      "enable": true,
-                      "name": "price",
-                      "contentType": "",
-                      "schema": {
-                        "type": "number"
-                      }
-                    },
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "number",
-                      "id": "zuH985kRN6",
-                      "example": "true",
-                      "enable": true,
-                      "name": "is_active",
-                      "contentType": "",
-                      "schema": {
-                        "type": "number"
-                      }
-                    }
-                  ],
-                  "required": true,
-                  "mediaType": "",
-                  "examples": [],
-                  "oasExtensions": ""
-                },
-                "description": "",
-                "tags": [],
-                "status": "developing",
-                "serverId": "",
-                "operationId": "",
-                "sourceUrl": "",
-                "ordering": 37,
-                "cases": [],
-                "mocks": [],
-                "customApiFields": "{}",
-                "advancedSettings": {
-                  "disabledSystemHeaders": {}
-                },
-                "mockScript": {},
-                "codeSamples": [],
-                "commonResponseStatus": {},
-                "responseChildren": [],
-                "visibility": "INHERITED",
-                "moduleId": 1335111,
-                "oasExtensions": "",
-                "type": "http",
-                "preProcessors": [],
-                "postProcessors": [],
-                "inheritPostProcessors": {},
-                "inheritPreProcessors": {}
-              }
-            },
-            {
-              "name": "delete",
-              "api": {
-                "id": "38818280",
-                "method": "delete",
-                "path": "products/6",
-                "parameters": {
-                  "query": [],
-                  "header": [
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "string",
-                      "id": "6BBfgWX94d",
-                      "example": "application/json",
-                      "enable": true,
-                      "name": "Accept"
-                    }
-                  ]
-                },
-                "auth": {
-                  "type": "inherit",
-                  "inherit": {}
-                },
-                "securityScheme": {},
-                "commonParameters": {
-                  "query": [],
-                  "body": [],
-                  "cookie": [],
-                  "header": []
-                },
-                "responses": [
-                  {
-                    "id": "104324428",
-                    "code": 200,
-                    "name": "Success",
-                    "headers": [],
-                    "jsonSchema": {
-                      "type": "object",
-                      "properties": {}
-                    },
-                    "itemSchema": {},
-                    "description": "",
-                    "contentType": "json",
-                    "mediaType": ""
-                  }
-                ],
-                "responseExamples": [],
-                "requestBody": {
-                  "type": "multipart/form-data",
-                  "parameters": [],
-                  "required": true,
-                  "mediaType": "",
-                  "examples": [],
-                  "oasExtensions": ""
-                },
-                "description": "",
-                "tags": [],
-                "status": "developing",
-                "serverId": "",
-                "operationId": "",
-                "sourceUrl": "",
-                "ordering": 43,
-                "cases": [],
-                "mocks": [],
-                "customApiFields": "{}",
-                "advancedSettings": {
-                  "disabledSystemHeaders": {}
-                },
-                "mockScript": {},
-                "codeSamples": [],
-                "commonResponseStatus": {},
-                "responseChildren": [],
-                "visibility": "INHERITED",
-                "moduleId": 1335111,
-                "oasExtensions": "",
-                "type": "http",
-                "preProcessors": [],
-                "postProcessors": [],
-                "inheritPostProcessors": {},
-                "inheritPreProcessors": {}
-              }
-            },
-            {
-              "name": "show",
-              "api": {
-                "id": "38820286",
-                "method": "get",
-                "path": "products/5",
-                "parameters": {
-                  "query": [],
-                  "header": [
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "string",
-                      "id": "6BBfgWX94d",
-                      "example": "application/json",
-                      "enable": true,
-                      "name": "Accept"
-                    }
-                  ]
-                },
-                "auth": {
-                  "type": "inherit",
-                  "inherit": {}
-                },
-                "securityScheme": {},
-                "commonParameters": {
-                  "query": [],
-                  "body": [],
-                  "cookie": [],
-                  "header": []
-                },
-                "responses": [
-                  {
-                    "id": "104324428",
-                    "code": 200,
-                    "name": "Success",
-                    "headers": [],
-                    "jsonSchema": {
-                      "type": "object",
-                      "properties": {}
-                    },
-                    "itemSchema": {},
-                    "description": "",
-                    "contentType": "json",
-                    "mediaType": ""
-                  }
-                ],
-                "responseExamples": [],
-                "requestBody": {
-                  "type": "multipart/form-data",
-                  "parameters": [],
-                  "required": true,
-                  "mediaType": "",
-                  "examples": [],
-                  "oasExtensions": ""
-                },
-                "description": "",
-                "tags": [],
-                "status": "developing",
-                "serverId": "",
-                "operationId": "",
-                "sourceUrl": "",
-                "ordering": 49,
-                "cases": [],
-                "mocks": [],
-                "customApiFields": "{}",
-                "advancedSettings": {
-                  "disabledSystemHeaders": {}
-                },
-                "mockScript": {},
-                "codeSamples": [],
-                "commonResponseStatus": {},
-                "responseChildren": [],
-                "visibility": "INHERITED",
-                "moduleId": 1335111,
-                "oasExtensions": "",
-                "type": "http",
-                "preProcessors": [],
-                "postProcessors": [],
-                "inheritPostProcessors": {},
-                "inheritPreProcessors": {}
-              }
-            },
-            {
-              "name": "stock",
-              "api": {
-                "id": "38820398",
-                "method": "post",
-                "path": "products/5/stock",
-                "parameters": {
-                  "query": [],
-                  "header": [
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "string",
-                      "id": "6BBfgWX94d",
-                      "example": "application/json",
-                      "enable": true,
-                      "name": "Accept"
-                    }
-                  ]
-                },
-                "auth": {
-                  "type": "inherit",
-                  "inherit": {}
-                },
-                "securityScheme": {},
-                "commonParameters": {
-                  "query": [],
-                  "body": [],
-                  "cookie": [],
-                  "header": []
-                },
-                "responses": [
-                  {
-                    "id": "104324428",
-                    "code": 200,
-                    "name": "Success",
-                    "headers": [],
-                    "jsonSchema": {
-                      "type": "object",
-                      "properties": {}
-                    },
-                    "itemSchema": {},
-                    "description": "",
-                    "contentType": "json",
-                    "mediaType": ""
-                  }
-                ],
-                "responseExamples": [],
-                "requestBody": {
-                  "type": "multipart/form-data",
-                  "parameters": [
-                    {
-                      "required": false,
-                      "description": "",
-                      "type": "integer",
-                      "id": "uc0jEKXsc1",
-                      "example": "10",
-                      "enable": true,
-                      "name": "stock",
-                      "schema": {
-                        "type": "integer"
-                      }
-                    }
-                  ],
-                  "required": true,
-                  "mediaType": "",
-                  "examples": [],
-                  "oasExtensions": ""
-                },
-                "description": "",
-                "tags": [],
-                "status": "developing",
-                "serverId": "",
-                "operationId": "",
-                "sourceUrl": "",
-                "ordering": 55,
-                "cases": [],
-                "mocks": [],
-                "customApiFields": "{}",
-                "advancedSettings": {
-                  "disabledSystemHeaders": {}
-                },
-                "mockScript": {},
-                "codeSamples": [],
-                "commonResponseStatus": {},
-                "responseChildren": [],
-                "visibility": "INHERITED",
-                "moduleId": 1335111,
-                "oasExtensions": "",
-                "type": "http",
-                "preProcessors": [],
-                "postProcessors": [],
-                "inheritPostProcessors": {},
-                "inheritPreProcessors": {}
-              }
-            }
-          ]
-        },
-        {
           "name": "Orders",
           "id": 9293960,
           "auth": {
@@ -1866,6 +1241,89 @@
                 "operationId": "",
                 "sourceUrl": "",
                 "ordering": 30,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [],
+                "visibility": "INHERITED",
+                "moduleId": 1335111,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "confirm",
+              "api": {
+                "id": "38963120",
+                "method": "get",
+                "path": "orders/3/confirm",
+                "parameters": {
+                  "query": [],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "6BBfgWX94d",
+                      "example": "application/json",
+                      "enable": true,
+                      "name": "Accept"
+                    }
+                  ]
+                },
+                "auth": {
+                  "type": "inherit",
+                  "inherit": {}
+                },
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "104324428",
+                    "code": 200,
+                    "name": "Success",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "itemSchema": {},
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "multipart/form-data",
+                  "parameters": [],
+                  "required": true,
+                  "mediaType": "",
+                  "examples": [],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 36,
                 "cases": [],
                 "mocks": [],
                 "customApiFields": "{}",

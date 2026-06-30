@@ -255,333 +255,6 @@
             "auth": {}
         },
         {
-            "name": "Products",
-            "description": "",
-            "item": [
-                {
-                    "name": "products",
-                    "description": "",
-                    "event": [],
-                    "auth": {},
-                    "request": {
-                        "auth": {
-                            "type": "inherit",
-                            "inherit": []
-                        },
-                        "method": "GET",
-                        "body": {},
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "description": "",
-                                "type": "string"
-                            }
-                        ],
-                        "url": {
-                            "raw": "products",
-                            "path": [
-                                "products"
-                            ],
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "query": [],
-                            "variable": []
-                        }
-                    },
-                    "response": [],
-                    "protocolProfileBehavior": {
-                        "strictSSL": false,
-                        "followRedirects": true
-                    }
-                },
-                {
-                    "name": "create",
-                    "description": "",
-                    "event": [],
-                    "auth": {},
-                    "request": {
-                        "auth": {
-                            "type": "inherit",
-                            "inherit": []
-                        },
-                        "method": "POST",
-                        "body": {
-                            "mode": "formdata",
-                            "formdata": [
-                                {
-                                    "key": "name",
-                                    "value": "{{$commerce.productName}}",
-                                    "type": "text",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "price",
-                                    "value": "{{$commerce.price(dec=2)}}",
-                                    "type": "text",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "is_active",
-                                    "value": "true",
-                                    "type": "text",
-                                    "disabled": false
-                                }
-                            ]
-                        },
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "description": "",
-                                "type": "string"
-                            }
-                        ],
-                        "url": {
-                            "raw": "products",
-                            "path": [
-                                "products"
-                            ],
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "query": [],
-                            "variable": []
-                        }
-                    },
-                    "response": [],
-                    "protocolProfileBehavior": {
-                        "strictSSL": false,
-                        "followRedirects": true
-                    }
-                },
-                {
-                    "name": "update",
-                    "description": "",
-                    "event": [],
-                    "auth": {},
-                    "request": {
-                        "auth": {
-                            "type": "inherit",
-                            "inherit": []
-                        },
-                        "method": "PATCH",
-                        "body": {
-                            "mode": "formdata",
-                            "formdata": [
-                                {
-                                    "key": "name",
-                                    "value": "{{$commerce.productName}}",
-                                    "type": "text",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "price",
-                                    "value": "{{$commerce.price(dec=2)}}",
-                                    "type": "text",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "is_active",
-                                    "value": "true",
-                                    "type": "text",
-                                    "disabled": false
-                                }
-                            ]
-                        },
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "description": "",
-                                "type": "string"
-                            }
-                        ],
-                        "url": {
-                            "raw": "products/6",
-                            "path": [
-                                "products",
-                                "6"
-                            ],
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "query": [],
-                            "variable": []
-                        }
-                    },
-                    "response": [],
-                    "protocolProfileBehavior": {
-                        "strictSSL": false,
-                        "followRedirects": true
-                    }
-                },
-                {
-                    "name": "delete",
-                    "description": "",
-                    "event": [],
-                    "auth": {},
-                    "request": {
-                        "auth": {
-                            "type": "inherit",
-                            "inherit": []
-                        },
-                        "method": "DELETE",
-                        "body": {
-                            "mode": "formdata",
-                            "formdata": []
-                        },
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "description": "",
-                                "type": "string"
-                            }
-                        ],
-                        "url": {
-                            "raw": "products/6",
-                            "path": [
-                                "products",
-                                "6"
-                            ],
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "query": [],
-                            "variable": []
-                        }
-                    },
-                    "response": [],
-                    "protocolProfileBehavior": {
-                        "strictSSL": false,
-                        "followRedirects": true
-                    }
-                },
-                {
-                    "name": "show",
-                    "description": "",
-                    "event": [],
-                    "auth": {},
-                    "request": {
-                        "auth": {
-                            "type": "inherit",
-                            "inherit": []
-                        },
-                        "method": "GET",
-                        "body": {
-                            "mode": "formdata",
-                            "formdata": []
-                        },
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "description": "",
-                                "type": "string"
-                            }
-                        ],
-                        "url": {
-                            "raw": "products/5",
-                            "path": [
-                                "products",
-                                "5"
-                            ],
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "query": [],
-                            "variable": []
-                        }
-                    },
-                    "response": [],
-                    "protocolProfileBehavior": {
-                        "strictSSL": false,
-                        "followRedirects": true
-                    }
-                },
-                {
-                    "name": "stock",
-                    "description": "",
-                    "event": [],
-                    "auth": {},
-                    "request": {
-                        "auth": {
-                            "type": "inherit",
-                            "inherit": []
-                        },
-                        "method": "POST",
-                        "body": {
-                            "mode": "formdata",
-                            "formdata": [
-                                {
-                                    "key": "stock",
-                                    "value": "10",
-                                    "type": "text",
-                                    "disabled": false
-                                }
-                            ]
-                        },
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "description": "",
-                                "type": "string"
-                            }
-                        ],
-                        "url": {
-                            "raw": "products/5/stock",
-                            "path": [
-                                "products",
-                                "5",
-                                "stock"
-                            ],
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "query": [],
-                            "variable": []
-                        }
-                    },
-                    "response": [],
-                    "protocolProfileBehavior": {
-                        "strictSSL": false,
-                        "followRedirects": true
-                    }
-                }
-            ],
-            "event": [
-                {
-                    "listen": "prerequest",
-                    "script": {
-                        "exec": [],
-                        "type": "text/javascript",
-                        "packages": {}
-                    }
-                },
-                {
-                    "listen": "test",
-                    "script": {
-                        "exec": [],
-                        "type": "text/javascript",
-                        "packages": {}
-                    }
-                }
-            ],
-            "auth": {
-                "type": "bearer",
-                "bearer": [
-                    {
-                        "key": "token",
-                        "value": "{{token}}",
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        {
             "name": "Orders",
             "description": "",
             "item": [
@@ -913,6 +586,49 @@
                                 "orders",
                                 "3",
                                 "pay"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        }
+                    },
+                    "response": [],
+                    "protocolProfileBehavior": {
+                        "strictSSL": false,
+                        "followRedirects": true
+                    }
+                },
+                {
+                    "name": "confirm",
+                    "description": "",
+                    "event": [],
+                    "auth": {},
+                    "request": {
+                        "auth": {
+                            "type": "inherit",
+                            "inherit": []
+                        },
+                        "method": "GET",
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "description": "",
+                                "type": "string"
+                            }
+                        ],
+                        "url": {
+                            "raw": "orders/3/confirm",
+                            "path": [
+                                "orders",
+                                "3",
+                                "confirm"
                             ],
                             "host": [
                                 "{{baseUrl}}"
