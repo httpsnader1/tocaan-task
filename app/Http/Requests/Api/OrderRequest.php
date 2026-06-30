@@ -11,7 +11,6 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payment_method' => ['required', 'string'],
             'products.*.product_id' => ['required', Rule::exists(Product::class, 'id')],
             'products.*.quantity' => ['required', 'integer', 'min:1'],
         ];

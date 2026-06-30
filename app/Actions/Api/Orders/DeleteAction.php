@@ -13,7 +13,7 @@ class DeleteAction extends BaseAction
     public function handle(Order $order): JsonResponse
     {
         throw_if(
-            $order->payment->status === PaymentStatusEnum::SUCCESS,
+            $order->payment?->status === PaymentStatusEnum::SUCCESS,
             new WarningException('Sorry , You Can Not Delete Order With Success Payment')
         );
 

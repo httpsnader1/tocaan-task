@@ -24,11 +24,15 @@ class OrderBuilder extends BaseBuilder
 
     public function filterPaymentMethod(?string $value): self
     {
-        return $this->when($value, fn(self $query, string $value) => $query->wherePaymentMethod($value));
+        return $this->when($value, function ($query, string $value) {
+            $query->whereRelation('payment', 'method', $value);
+        });
     }
 
     public function filterPaymentStatus(?string $value): self
     {
-        return $this->when($value, fn(self $query, string $value) => $query->wherePaymentStatus($value));
+        return $this->when($value, function ($query, string $value) {
+            $query->whereRelation('payment', 'status', $value);
+        });
     }
 }

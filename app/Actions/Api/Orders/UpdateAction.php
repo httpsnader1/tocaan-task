@@ -16,7 +16,7 @@ class UpdateAction extends BaseAction
     public function handle(Order $order, OrderRequest $request): JsonResponse
     {
         throw_if(
-            $order->payment->status === PaymentStatusEnum::SUCCESS,
+            $order->payment?->status === PaymentStatusEnum::SUCCESS,
             new WarningException('Sorry , You Can Not Update Order With Success Payment')
         );
 
