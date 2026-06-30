@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentMethodEnum;
 use App\Enums\PaymentStatusEnum;
 use App\Traits\BaseModelTrait;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -22,6 +23,7 @@ class Payment extends Model
     protected function casts(): array
     {
         return [
+            'method' => PaymentMethodEnum::class,
             'amount' => 'float',
             'status' => PaymentStatusEnum::class,
             'paid_at' => 'datetime',
